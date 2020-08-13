@@ -1,3 +1,8 @@
-Task1\popularAirports$airportMapper.class
+Task1\onTimeArrPerf$onTimeReducer.class
+Task1\TupleWritable.class
+Task1\AirlineOntimeMetadata.class
+Task1\onTimeArrPerf$onTimeMapper.class
+Task1\onTimeArrPerf.class
 Task1\popularAirports$airportReducer.class
 Task1\popularAirports.class
+Task1\popularAirports$airportMapper.class
