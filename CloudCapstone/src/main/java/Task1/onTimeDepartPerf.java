@@ -1,6 +1,5 @@
 package Task1;
 
-
 import java.io.IOException;
 import java.util.stream.Stream;
 
@@ -8,23 +7,23 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import Task1.AirlineOntimeMetadata;
+import Task1.TupleWritable;
 
-public class onTimeArrPerf {
-	
-	public static final int UNIQUE_CARRIER_ID = 6;
-	public static final int ARRIVAL_DELAY = 38;
-	public static class onTimeMapper extends Mapper<LongWritable,Text,Text,DoubleWritable>{
+public class onTimeDepartPerf {
+	public static class onTimeMapper extends Mapper<LongWritable,Text,TupleWritable,DoubleWritable>{
 		
-		private Text carrier = new Text();
+		private TupleWritable apt_carrier = new TupleWritable();
 		private DoubleWritable arrDelay = new DoubleWritable();
 		
-		public void map(LongWritable key, Text lineText, Context context) {
+		public void map(LongWritable key, Text lineText,Context context) {
 			
 			try {
 				
@@ -32,15 +31,16 @@ public class onTimeArrPerf {
 			.map(line -> line.split(","))
 			.forEach(tokens->
 			{
-				//String carr = tokens[UNIQUE_CARRIER_ID].replaceAll("\"", "");
-				//String delay = tokens[ARRIVAL_DELAY].replaceAll("\"", "");
+				String airport = tokens[AirlineOntimeMetadata.ORIGIN_AIRPORT].replaceAll("\"", "");
+				String delay = tokens[AirlineOntimeMetadata.DEPARTURE_DELAY].replaceAll("\"", "");
+				String carr = tokens[AirlineOntimeMetadata.UNIQUE_CARRIER_ID].replaceAll("\"", "");
 				
-				
-				carrier.set(tokens[UNIQUE_CARRIER_ID].replaceAll("\"", ""));
-				arrDelay.set(Double.parseDouble(tokens[ARRIVAL_DELAY].replaceAll("\"", "")));
+				apt_carrier.setfirst(airport);
+				apt_carrier.setsecond(carr);
+				arrDelay.set(Double.parseDouble(delay));
 				
 				try {
-					context.write(carrier, arrDelay);
+					context.write(apt_carrier, arrDelay);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -57,9 +57,9 @@ public class onTimeArrPerf {
 		
 	}
 	
-	public static class onTimeReducer extends Reducer<Text,DoubleWritable,Text,DoubleWritable>{
+	public static class onTimeReducer extends Reducer<TupleWritable,DoubleWritable,TupleWritable,DoubleWritable>{
 		
-		public void reduce(Text key, Iterable<DoubleWritable> values, Context context ) throws IOException, InterruptedException {
+		public void reduce(TupleWritable key, Iterable<DoubleWritable> values, Context context) throws IOException, InterruptedException {
 			
 			int count=0;double sum = 0;
 			for(DoubleWritable val: values) {
@@ -74,7 +74,7 @@ public class onTimeArrPerf {
 
 	public static void main(String args[])throws Exception {
 		Job job = Job.getInstance();
-	    job.setJarByClass(onTimeArrPerf.class);
+	    job.setJarByClass(onTimeDepartPerf.class);
 	    job.setJobName("Frequency");
 
 	    // set the input and output path
@@ -86,7 +86,7 @@ public class onTimeArrPerf {
 	    job.setReducerClass(onTimeReducer.class);
 
 	    // specify the type of the output
-	    job.setOutputKeyClass(Text.class);
+	    job.setOutputKeyClass(TupleWritable.class);
 	    job.setOutputValueClass(DoubleWritable.class);
 
 	    // run the job
@@ -94,4 +94,6 @@ public class onTimeArrPerf {
 	  
 		
 	}
+
+	
 }
