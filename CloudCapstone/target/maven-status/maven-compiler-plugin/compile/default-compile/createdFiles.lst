@@ -11,4 +11,9 @@ Task1\onTimeDepartPerf$onTimeMapper.class
 Task1\onTimeArrPerf$onTimeMapper.class
 Task1\onTimeArrPerf.class
 Task1\popularAirports.class
+Task1\test.class
+Task1\XYonTimeArrPerf.class
+Task1\XYonTimeArrPerf$XYonTimeReducer.class
+Task1\XYonTimeArrPerf$XYonTimeMapper.class
+Task1\MultiWritable.class
 Task1\onTimeAirDepart.class

@@ -13,8 +13,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-import Task1.AirlineOntimeMetadata;
-import Task1.TupleWritable;
 
 
 public class onTimeAirDepart {

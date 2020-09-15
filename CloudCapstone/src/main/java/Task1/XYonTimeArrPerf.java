@@ -7,20 +7,17 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-import Task1.AirlineOntimeMetadata;
-import Task1.TupleWritable;
 
-public class onTimeDepartPerf {
-	public static class onTimeMapper extends Mapper<LongWritable,Text,TupleWritable,DoubleWritable>{
+public class XYonTimeArrPerf {
+	public static class XYonTimeMapper extends Mapper<LongWritable,Text,Text,DoubleWritable>{
 		
-		private TupleWritable apt_carrier = new TupleWritable();
+		private Text keyData = new Text();
 		private DoubleWritable arrDelay = new DoubleWritable();
 		
 		public void map(LongWritable key, Text lineText,Context context) {
@@ -31,17 +28,22 @@ public class onTimeDepartPerf {
 			.map(line -> line.split(","))
 			.forEach(tokens->
 			{
-				String airport = tokens[AirlineOntimeMetadata.ORIGIN_AIRPORT].replaceAll("\"", "");
-				String delay = tokens[AirlineOntimeMetadata.DEPARTURE_DELAY].replaceAll("\"", "");
-				String carr = tokens[AirlineOntimeMetadata.UNIQUE_CARRIER_ID].replaceAll("\"", "");
+				//String org = tokens[AirlineOntimeMetadata.ORIGIN_AIRPORT].replaceAll("\"", "");
+				String arrival = tokens[AirlineOntimeMetadata.ARRIVAL_DELAY].replaceAll("\"", "");
+				//String dest = tokens[AirlineOntimeMetadata.DESTINATION_AIRPORT].replaceAll("\"", "");
+				//String carrier = tokens[AirlineOntimeMetadata.UNIQUE_CARRIER_ID].replaceAll("\"", "");
 				
-				//airport = src apt
-				apt_carrier.setfirst(airport);
-				apt_carrier.setsecond(carr);
-				arrDelay.set(Double.parseDouble(delay));
+				
+				//data[0]=org ; data[1] = delay ; data[2]=dest ; data[3]=carrier 
+				String data = tokens[AirlineOntimeMetadata.ORIGIN_AIRPORT].replaceAll("\"", "")+
+						" " + tokens[AirlineOntimeMetadata.DESTINATION_AIRPORT].replaceAll("\"", "")+
+						" " + tokens[AirlineOntimeMetadata.UNIQUE_CARRIER_ID].replaceAll("\"", "");
+				
+				keyData.set(data);
+				arrDelay.set(Double.parseDouble(arrival));
 				
 				try {
-					context.write(apt_carrier, arrDelay);
+					context.write(keyData, arrDelay);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -58,9 +60,10 @@ public class onTimeDepartPerf {
 		
 	}
 	
-	public static class onTimeReducer extends Reducer<TupleWritable,DoubleWritable,TupleWritable,DoubleWritable>{
+	
+	public static class XYonTimeReducer extends Reducer<Text,DoubleWritable,Text,DoubleWritable>{
 		
-		public void reduce(TupleWritable key, Iterable<DoubleWritable> values, Context context) throws IOException, InterruptedException {
+		public void reduce(Text key, Iterable<DoubleWritable> values, Context context) throws IOException, InterruptedException {
 			
 			int count=0;double sum = 0;
 			for(DoubleWritable val: values) {
@@ -75,7 +78,7 @@ public class onTimeDepartPerf {
 
 	public static void main(String args[])throws Exception {
 		Job job = Job.getInstance();
-	    job.setJarByClass(onTimeDepartPerf.class);
+	    job.setJarByClass(XYonTimeArrPerf.class);
 	    job.setJobName("Frequency");
 
 	    // set the input and output path
@@ -83,11 +86,11 @@ public class onTimeDepartPerf {
 	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 	    // set the Mapper and Reducer class
-	    job.setMapperClass(onTimeMapper.class);
-	    job.setReducerClass(onTimeReducer.class);
+	    job.setMapperClass(XYonTimeMapper.class);
+	    job.setReducerClass(XYonTimeReducer.class);
 
 	    // specify the type of the output
-	    job.setOutputKeyClass(TupleWritable.class);
+	    job.setOutputKeyClass(Text.class);
 	    job.setOutputValueClass(DoubleWritable.class);
 
 	    // run the job
@@ -96,5 +99,5 @@ public class onTimeDepartPerf {
 		
 	}
 
-	
+
 }
