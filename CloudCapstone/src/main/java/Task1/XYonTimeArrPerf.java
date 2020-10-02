@@ -14,6 +14,8 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 
+import Task1.AirlineOntimeMetadata;
+
 public class XYonTimeArrPerf {
 	public static class XYonTimeMapper extends Mapper<LongWritable,Text,Text,DoubleWritable>{
 		

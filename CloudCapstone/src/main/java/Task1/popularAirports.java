@@ -1,6 +1,7 @@
 package Task1;
 import java.io.IOException;
 
+
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -10,6 +11,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import Task1.AirlineOntimeMetadata;
 
 public class popularAirports {
 
@@ -25,14 +27,14 @@ public class popularAirports {
 			    
 			    
 			    try {
-                    word.set(Airport[11]);
+                    word.set(Airport[AirlineOntimeMetadata.ORIGIN_AIRPORT]);
                     context.write(word, one);
                 } catch (Exception e) {
                     System.err.println(e);
                 }
                 // TO
                 try {
-                    word.set(Airport[18]);
+                    word.set(Airport[AirlineOntimeMetadata.DESTINATION_AIRPORT]);
                     context.write(word, one);
                 } catch (Exception e) {
                     System.err.println(e);

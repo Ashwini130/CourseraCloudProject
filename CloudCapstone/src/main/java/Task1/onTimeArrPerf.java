@@ -14,11 +14,12 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import Task1.AirlineOntimeMetadata;
 
 public class onTimeArrPerf {
 	
-	public static final int UNIQUE_CARRIER_ID = 6;
-	public static final int ARRIVAL_DELAY = 38;
+	//public static final int UNIQUE_CARRIER_ID = 6;
+	//public static final int ARRIVAL_DELAY = 38;
 	public static class onTimeMapper extends Mapper<LongWritable,Text,Text,DoubleWritable>{
 		
 		private Text carrier = new Text();
@@ -36,8 +37,8 @@ public class onTimeArrPerf {
 				//String delay = tokens[ARRIVAL_DELAY].replaceAll("\"", "");
 				
 				
-				carrier.set(tokens[UNIQUE_CARRIER_ID].replaceAll("\"", ""));
-				arrDelay.set(Double.parseDouble(tokens[ARRIVAL_DELAY].replaceAll("\"", "")));
+				carrier.set(tokens[AirlineOntimeMetadata.UNIQUE_CARRIER_ID].replaceAll("\"", ""));
+				arrDelay.set(Double.parseDouble(tokens[AirlineOntimeMetadata.ARRIVAL_DELAY].replaceAll("\"", "")));
 				
 				try {
 					context.write(carrier, arrDelay);
