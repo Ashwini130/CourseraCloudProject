@@ -84,6 +84,7 @@ public class onTimeDepartPerf {
 
 	    // set the Mapper and Reducer class
 	    job.setMapperClass(onTimeMapper.class);
+	    job.setCombinerClass(onTimeReducer.class);
 	    job.setReducerClass(onTimeReducer.class);
 
 	    // specify the type of the output

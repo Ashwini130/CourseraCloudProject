@@ -2,6 +2,8 @@ Task1\onTimeArrPerf$onTimeReducer.class
 Task1\TupleWritable.class
 Task1\AirlineOntimeMetadata.class
 Task1\onTimeAirDepart$onTimeMapper.class
+Task1\XYZBestFlight$XYZBestFlightReducer.class
+Task1\XYZBestFlight.class
 Task1\popularAirports$airportReducer.class
 Task1\onTimeDepartPerf.class
 Task1\onTimeAirDepart$onTimeReducer.class
@@ -10,8 +12,8 @@ Task1\popularAirports$airportMapper.class
 Task1\onTimeDepartPerf$onTimeMapper.class
 Task1\onTimeArrPerf$onTimeMapper.class
 Task1\onTimeArrPerf.class
+Task1\XYZBestFlight$XYZBestFlightMapper.class
 Task1\popularAirports.class
-Task1\test.class
 Task1\XYonTimeArrPerf.class
 Task1\XYonTimeArrPerf$XYonTimeReducer.class
 Task1\XYonTimeArrPerf$XYonTimeMapper.class

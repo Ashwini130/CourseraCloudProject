@@ -89,6 +89,7 @@ public class XYonTimeArrPerf {
 
 	    // set the Mapper and Reducer class
 	    job.setMapperClass(XYonTimeMapper.class);
+	    job.setCombinerClass(XYonTimeReducer.class);
 	    job.setReducerClass(XYonTimeReducer.class);
 
 	    // specify the type of the output

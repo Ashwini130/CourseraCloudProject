@@ -73,6 +73,7 @@ public class popularAirports {
 
 		    // set the Mapper and Reducer class
 		    job.setMapperClass(airportMapper.class);
+		    job.setCombinerClass(airportReducer.class);
 		    job.setReducerClass(airportReducer.class);
 
 		    // specify the type of the output
