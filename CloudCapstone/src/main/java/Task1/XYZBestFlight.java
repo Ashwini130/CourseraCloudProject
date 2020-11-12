@@ -39,15 +39,16 @@ public class XYZBestFlight {
 				//KEY VALUES
 				String src = tokens[AirlineOntimeMetadata.ORIGIN_AIRPORT].replaceAll("\"", "");
 				String dest = tokens[AirlineOntimeMetadata.DESTINATION_AIRPORT].replaceAll("\"", "");
-				String AM_PM = XYZobject.amOrPm(tokens[AirlineOntimeMetadata.DEPARTURE_TIME].replaceAll("\"", ""));
+				String AM_PM = XYZobject.amOrPm(tokens[AirlineOntimeMetadata.SCHEDULED_DEPARTURE_TIME].replaceAll("\"", ""));
 				String date = tokens[AirlineOntimeMetadata.DEPARTURE_DATE].replaceAll("\"","");
 				
 				
 				String carrier = tokens[AirlineOntimeMetadata.UNIQUE_CARRIER_ID].replaceAll("\"", "");
 				String flightNum = tokens[AirlineOntimeMetadata.FLIGHT_NUM].replaceAll("\"", "");
 				String delay = tokens[AirlineOntimeMetadata.ARRIVAL_DELAY].replaceAll("\"", "");
-				String time = tokens[AirlineOntimeMetadata.DEPARTURE_TIME].replaceAll("\"", "");
-				
+				String departureTime = tokens[AirlineOntimeMetadata.SCHEDULED_DEPARTURE_TIME].replaceAll("\"", "");
+				String time = departureTime.substring(0, 2)
+                        + ":" + departureTime.substring(2, 4);	
 				
 				String data = src+" "+dest+" "+AM_PM+" "+date;
 				String value = carrier + " " + flightNum + " " + time + " " + delay;
