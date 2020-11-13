@@ -54,29 +54,6 @@ Once we are done with ETL, we move on to the development part where we write had
 Since we need to create a JAR file of our compiled classes, use MAVEN for building your projects which I feel is the easiest way to clean and build your project(in just a matter of clicks! instead of long commands for compiling your code in shell) 
 Use POM.xml to specify all the dependencies for your java classes. You can refer to my code in this folder.
 
-## Release History
-
-* 0.2.1
-    * CHANGE: Update docs (module code remains unchanged)
-* 0.2.0
-    * CHANGE: Remove `setDefaultXYZ()`
-    * ADD: Add `init()`
-* 0.1.1
-    * FIX: Crash when calling `baz()` (Thanks @GenerousContributorName!)
-* 0.1.0
-    * The first proper release
-    * CHANGE: Rename `foo()` to `bar()`
-* 0.0.1
-    * Work in progress
-
-## Meta
-
-Your Name – [@YourTwitter](https://twitter.com/dbader_org) – YourEmail@example.com
-
-Distributed under the XYZ license. See ``LICENSE`` for more information.
-
-[https://github.com/yourname/github-link](https://github.com/dbader/)
-
 ## Contributing
 
 1. Fork it (<https://github.com/yourname/yourproject/fork>)
