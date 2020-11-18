@@ -7,15 +7,13 @@ Follow along the following steps for a walkthrough of Project dev and outputs.
 
 | Title  | Description
 |---|---|
-| **Slide deck** | [Slide deck for the workshop](slides/Presentation.pdf) |
-| **1. Create your Astra instance** | [Create your Astra instance](#1-create-your-astra-instance) |
-| **2. Create a table** | [Create a table](#2-create-a-table) |
-| **3. Execute CRUD (Create, Read, Update, Delete) operations** | [Execute CRUD operations](#3-execute-crud-operations) |
+| **1. Data Extraction and Cleaning** | Mounting EBS snapshot, extracting and storing cleaned data in HDFS|
+| **2. Data Analysis using Hadoop and PySpark** | Batch Processing using Hadoop and extracting results using PySpark API and storing information in Cassandra|
+| **3. Solutions** | Solutions from the dataset for the questions like best flight on a given day, top 10 airports etc.|
 
 
-## 1. Create your Astra instance
+## 1. Data Extraction and Cleaning
 
-`ASTRA` service is available at url [https://astra.datastax.com](https://dtsx.io/workshop). `ASTRA` is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. `Astra` offers **10 Gb Tier Free Forever** and you **don't need a credit card** or anything to sign-up and use it. 
 
 **✅ Step 1a. Register (if needed) and Sign In to Astra** : You can use your `Github`, `Google` accounts or register with an `email`.
 
