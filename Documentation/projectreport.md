@@ -69,4 +69,23 @@ Following diagram specifies the architecture used to integrate various big data 
 
 * Group 1
 
-** 1. Rank the top 10 most popular airports by numbers of flights to/from the airport.
+ **1. Rank the top 10 most popular airports by numbers of flights to/from the airport.**
+ **2.Rank the top 10 airlines by on-time arrival performance.**
+ 
+ * Group 2
+ 
+**1. For each airport X, rank the top-10 carriers in decreasing order of on-time departure performance from X.**
+**2. For each airport X, rank the top-10 airports in decreasing order of on-time departure performance from X.**
+**3. For each source-destination pair X-Y, rank the top-10 carriers in decreasing order of on-time arrival performance at Y from X.**
+
+* Group 3
+
+**1) Does the popularity distribution of airports follow a Zipf distribution? If not, what distribution does it follow?**
+
+**2) Tom wants to travel from airport X to airport Z. However, Tom also wants to stop at airport Y for some sightseeing on the way. More concretely, Tom has the following requirements
+a) The second leg of the journey (flight Y-Z) must depart two days after the first leg (flight X-Y). For example, if X-Y departs on January 5, 2008, Y-Z must depart on January 7, 2008.
+b) Tom wants his flights scheduled to depart airport X before 12:00 PM local time and to depart airport Y after 12:00 PM local time.
+c) Tom wants to arrive at each destination with as little delay as possible. You can assume you know the actual delay of each flight.
+
+Your mission (should you choose to accept it!) is to find, for each X-Y-Z and day/month (dd/mm) combination in the year 2008, the two flights (X-Y and Y-Z) that satisfy constraints (a) and (b) and have the best individual performance with respect to constraint (c), if such flights exist.
+
