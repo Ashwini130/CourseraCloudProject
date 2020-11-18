@@ -69,7 +69,7 @@ Following diagram specifies the architecture used to integrate various big data 
 
 * Group 1
 
- **1. Rank the top 10 most popular airports by numbers of flights to/from the airport.**
+ **1. Rank the top 10 most popular airports by numbers of flights to/from the airport.**<br>
  **2.Rank the top 10 airlines by on-time arrival performance.**
  
  * Group 2
@@ -87,5 +87,5 @@ a) The second leg of the journey (flight Y-Z) must depart two days after the fir
 b) Tom wants his flights scheduled to depart airport X before 12:00 PM local time and to depart airport Y after 12:00 PM local time.
 c) Tom wants to arrive at each destination with as little delay as possible. You can assume you know the actual delay of each flight.
 
-Your mission (should you choose to accept it!) is to find, for each X-Y-Z and day/month (dd/mm) combination in the year 2008, the two flights (X-Y and Y-Z) that satisfy constraints (a) and (b) and have the best individual performance with respect to constraint (c), if such flights exist.
+Your mission (should you choose to accept it!) is to find, for each X-Y-Z and day/month (dd/mm) combination in the year 2008, the two flights (X-Y and Y-Z) that satisfy constraints (a) and (b) and have the best individual performance with respect to constraint (c), if such flights exist.**
 
