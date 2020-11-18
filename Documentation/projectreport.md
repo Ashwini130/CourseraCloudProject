@@ -22,8 +22,8 @@ Follow along the following steps for a walkthrough of Project dev and outputs.
 - Attach the volume to your instance and Mount it to your file system using the following commands:
 
 ```
-$ lsblk                                          //TO list all the blocks
-$ sudo mkdir /data                       //Creating the directory for mounting
+$ lsblk                              //TO list all the blocks
+$ sudo mkdir /data                   //Creating the directory for mounting
 $ mount /dev/xvdf /data              //mounting /dev/xvdf on the /data folder created
 
 ```
@@ -34,8 +34,5 @@ $ mount /dev/xvdf /data              //mounting /dev/xvdf on the /data folder cr
 
 
 
-
-
-
-![Architecture Image](images/architecture.png?raw=true)
+![Architecture Image](images/architecture.PNG?raw=true)
 
