@@ -32,7 +32,17 @@ $ mount /dev/xvdf /data              //mounting /dev/xvdf on the /data folder cr
 
 - The data stored in the EBS snapshot is in the form of csv files which are in a zipped folder. We use the following script to extract it to HDFS folder.
 
+* [Extraction script on GitHub](https://github.com/Ashwini130/CourseraCloudProject/tree/master/Scripts/moveDataToHadoop.sh)
+
+**✅ Step 1d. Extract the csv files to HDFS**:
+
+- Clean the extracted files using Spark. The cleaning operations performed on the dataset were as follows:
+
+1. Post Data Exploration and examining a subset of the data it was observed that there are few rows of data having null values in ArrDelay columns(for flights that were cancelled). These null values might interfere with out analysis so we drop these columns
+
+2. In the Description of Transportation DataSet, it is mentioned that for some years the data collected has more columns, (which are not significant to out analysis) so we restrict our data columns to about 56 columns only(as opposed to some csv files having 75 columns)
 
 
+* [ETL script on GitHub](https://github.com/Ashwini130/CourseraCloudProject/tree/master/Scripts/ETL_script.sh)
 ![Architecture Image](images/architecture.PNG?raw=true)
 
