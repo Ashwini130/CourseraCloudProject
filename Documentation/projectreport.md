@@ -68,3 +68,5 @@ Following diagram specifies the architecture used to integrate various big data 
 ![Architecture Image](images/architecture.PNG?raw=true)
 
 * Group 1
+
+** 1. Rank the top 10 most popular airports by numbers of flights to/from the airport.
