@@ -15,7 +15,7 @@ Follow along the following steps for a walkthrough of Project dev and outputs.
 ## 1. Data Extraction and Cleaning
 
 
-**✅ Step 1a. Create an AWS or AWS Educate Account** :
+**✅ Step 1a. Create an AWS or AWS Educate Account** :<br>
 **✅ Step 1b. Mount EBS Snapshot**:
 
 - Create a volume of the publicly available EBS Snapshot for Linux Machine in your region same as your EC2 Instance.
@@ -70,6 +70,37 @@ Following diagram specifies the architecture used to integrate various big data 
 * Group 1
 
  **1. Rank the top 10 most popular airports by numbers of flights to/from the airport.**<br>
+ 
+ For this problem, We use the simple wordcount problem logic to count the number of occurences of the airport in the source and destination columns of the data. The logic used is as follows:
+ 
+ **Map Phase:**
+ 
+ <airport_name(Key) 1(Value)> ,<airport_name(key) 1(value)>....
+  
+ **Reduce Phase:**
+ 
+ airport_name value
+ 
+ ```
+ bin/yarn jar jars/CloudCapstone-0.0.1-SNAPSHOT.jar Task1/popularAirports.class /Cleaned_data /results/rankAirports
+
+ ```
+ 
+Post execution of the MapReduce operation we receive the following results in alphabetical order
+ 
+ ```
+ABE	228782
+ABI	38376
+ABQ	1414760
+...
+```
+
+Post that we clean and sort the data using PySpark to extract the Top 10 Popular Airports.
+
+```
+rdd.map(lambda line: line.split()).filter(lambda tuple: len(tuple) == 2).filter(lambda tuple: len(tuple[0])==3).map(lambda tuple: (int(tuple[1]),tuple[0])).sortByKey(ascending=False).take(10)
+```
+
  **2.Rank the top 10 airlines by on-time arrival performance.**
  
  * Group 2
