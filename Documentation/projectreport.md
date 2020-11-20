@@ -84,10 +84,10 @@ Following diagram specifies the architecture used to integrate various big data 
  
  ```
  bin/yarn jar jars/CloudCapstone-0.0.1-SNAPSHOT.jar Task1/popularAirports.class /Cleaned_data /results/rankAirports
-
  ```
  
-![link](images/link.png)[Reduce code for Group 1 Question 1](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/popularAirports.java)
+- [Reduce code for Group 1 Question 1](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/popularAirports.java)<br>
+
 Post execution of the MapReduce operation we receive the following results in alphabetical order
  
  ```
@@ -109,8 +109,12 @@ rdd.map(lambda line: line.split()).filter(lambda tuple: len(tuple) == 2).filter(
  
  airport_name(key) avg_arrDelay(value)
  
-[MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeArrPerf.java)
+- [MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeArrPerf.java)<br>
 
+- Execution:
+```
+ bin/yarn jar jars/CloudCapstone-0.0.1-SNAPSHOT.jar Task1/onTimeArrPerf.class /Cleaned_data /results/onTimeArrPerf
+ ```
 The output of the Mapreduce Operation is as follows:
 ```
 9E	5.8671846616957595
@@ -121,6 +125,8 @@ AQ	1.1569234424812056
 
 We take this resultset and process it in PySpark to extract top 10 airlines who have the best on time arrival performance.
 
+Note : I am running PySpark on my local machine using Jupyter Notebook as the scope of my processing is small for this acitvity. Spark can be run in a cluster mode for higher workloads.
+
  ```python
 rdd = file.cache()
 rdd = rdd.map(lambda line: line.split()).cache()
@@ -129,7 +135,7 @@ rdd3 = rdd2.map(lambda tuple:(float(tuple[0]),tuple[1]))
 rdd3.takeOrdered(10)
  ```
 [PySpark code](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/onTimeArrPerf_pyspark.ipynb)
- 
+<br> 
  * Group 2
  
 **1. For each airport X, rank the top-10 carriers in decreasing order of on-time departure performance from X.**
@@ -137,8 +143,14 @@ rdd3.takeOrdered(10)
 For this problem, our columns of interest are source airport,carrier id and departure delay of the csv file. Same as group 1, question 2, we perform the MapReduce operation where in the map phase we write the airport+carrier(compound key) to the disk along with the departure delay value whose average is calculated in the reduce phase.
 
 
-* ![MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeDPerf.java)
+- ![MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeDepartPerf.java)
+<br>
 
+- Execution : 
+
+```
+ bin/yarn jar jars/CloudCapstone-0.0.1-SNAPSHOT.jar Task1/onTimeDepartPerf.class /Cleaned_data /results/onTimeDepartPerf
+ ```
 The output of the Mapreduce Operation is as follows:
 ```
 ABE 9E	6.771714922048997
@@ -159,9 +171,24 @@ df = spark.createDataFrame(rdd)
 
 We store this created dataframe into cassandra table so that we can retrieve the top-10 carriers for a given airport with minimum departure delay. 
 
+I am running Cassandra locally because the scope of my project is quite small. Cassandra is very powerful key-value database to store and retrieve huge amounts of data(Big Data) faster and efficiently compared to relational databases.
+
+Follow the instruction on official page for Cassandra to install cassandra on your system.<br>
+Install the cassandra diver with the following command in Jupyter Notebook running PySpark. We use this as a connector between spark and cassandra to store and retreive data.
+
+```
+pip install cassandra-driver
+```
+
 Cassandra Table Definition:
 
 ```sql
+cqlsh:aviation> create table carrier_depart_delay(
+            ... airport text,
+            ... carrier text,
+            ... dep_delay decimal,
+            ... PRIMARY KEY(airport,carrier,dep_delay)) WITH CLUSTERING ORDER BY
+ (carrier asc,dep_delay desc);
 
 ```
 
@@ -172,8 +199,8 @@ Writing to Cassandra from PySpark:
 from cassandra.cluster import Cluster
 from pyspark.sql import SQLContext
 
-cluster = Cluster(['127.0.0.1'])  # provide contact points and port
-session = cluster.connect('aviation')
+cluster = Cluster(['127.0.0.1'])  # Connect to Cassandra locally. Provide contact points and port
+session = cluster.connect('aviation')   #keyspace 
 sqlContext = SQLContext(spark)
 
 df.write\
@@ -189,7 +216,12 @@ df.write\
 For this problem, our columns of interest are source airport,destination airport and departure delay of the csv file. Same as group 1, question 2, we perform the MapReduce operation where in the map phase we write the airport+carrier(compound key) to the disk along with the departure delay value whose average is calculated in the reduce phase.
 
 
-[MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/onTimeAirDepart.ipynb)
+- [MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/onTimeAirDepart.ipynb)
+
+- Execution:
+```
+bin/yarn jar jars/CloudCapstone-0.0.1-SNAPSHOT.jar Task1/onTimeDepartPerf.class /Cleaned_data /results/onTimeDepartPerf
+```
 
 The output of the Mapreduce Operation is as follows:
 ```
@@ -214,6 +246,12 @@ We store this data into cassandra(key-value store) table so that we can retrieve
 Cassandra Table Definition:
 
 ```sql
+cqlsh:aviation> create table aviation.airport_src_dest_arrival(
+            ... src text,
+            ... dest text,
+            ... arr_delay decimal,
+            ... carrier text,
+            ... PRIMARY KEY(src,arr_delay)) with clustering order by (arr_delay desc);
 ```
 
 Writing to Cassandra from PySpark:
@@ -230,7 +268,12 @@ df.write\
 
 For this problem we have 4 columns of interest : src,dest,carrier and arr_delay. Here the key will again be a compoun key(src, dest, carrier) and the average arr_delay will be our value.\
 
-[MapReduce Code]()
+[MapReduce Code](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/XYonTimeArrPerf.java.ipynb)
+
+- Execution:
+```
+bin/yarn jar jars/CloudCapstone-0.0.1-SNAPSHOT.jar Task1/XYonTimeArrPerf.class /Cleaned_data /results/XYonTimeArrPerf
+```
 
 The output of the Mapreduce Operation is as follows:
 ```
@@ -239,10 +282,14 @@ ABE ATL DL	6.266970753957606
 ABE ATL EA	3.4953071672354947
 ...
 ```
-
 We take this resultset and process it in PySpark to extract top 10 destination airports who have the best on time departure performance with respect to an 'X' as source airport.
 
 ```python
+file = spark.sparkContext.textFile('file:///C:/Users/Ashwini/Desktop/XYonTimeArrPerf')
+file = file.map(lambda line:line.split())
+file1 = file.filter(lambda row:len(row)==4).map(lambda tuple:(tuple[0],tuple[1],tuple[2],float(tuple[3])))
+df = spark.createDataFrame(rdd3)
+
 ```
 
 We store this data into cassandra(key-value store) table so that we can retrieve the top-10 airports for a given airport with minimum departure delay. 
@@ -250,11 +297,22 @@ We store this data into cassandra(key-value store) table so that we can retrieve
 Cassandra Table Definition:
 
 ```sql
+cqlsh:aviation> create table aviation.airport_src_dest_arrival(
+            ... src text,
+            ... dest text,
+            ... arr_delay decimal,
+            ... carrier text,
+            ... PRIMARY KEY(src,arr_delay)) with clustering order by (arr_delay desc);
 ```
 
 Writing to Cassandra from PySpark:
 
 ```python
+df.write\
+.format("org.apache.spark.sql.cassandra")\
+.mode('append')\
+.options(table = "airport_src_dest_arrival", keyspace = "aviation")  \
+.save()
 ```
 
 * Group 3
@@ -263,10 +321,21 @@ Writing to Cassandra from PySpark:
 
 We use the python matplotlib library for this question to plot the distibution of the aiports and it's occurence in the data. 
 
-[Python code for Plotting Distribution]
+[Python code for Plotting Distribution](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/Power%20Law%20Dist.ipynb)
 
 The following is the Graph generated from the code.
 
+![Distribution](images/distribution.png)
+
+
+Power law alpha: 1.494627
+Power law D: 0.101342
+Power law xmin: 60654
+Log normal mu: 11.941681
+Log normal sigma: 2.048870
+-3.5442411161248812 0.0003937449777681864
+
+<i>From the plot, it is clear that the distribution does not follow a Zipf distribution but rather follows a lognormal distribution.</i>
 
 
 
