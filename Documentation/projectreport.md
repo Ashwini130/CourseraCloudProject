@@ -137,28 +137,50 @@ rdd3.takeOrdered(10)
 For this problem, our columns of interest are source airport,carrier id and departure delay of the csv file. Same as group 1, question 2, we perform the MapReduce operation where in the map phase we write the airport+carrier(compound key) to the disk along with the departure delay value whose average is calculated in the reduce phase.
 
 
-* ![MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeArrPerf.java)
+* ![MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeDPerf.java)
 
 The output of the Mapreduce Operation is as follows:
 ```
+ABE 9E	6.771714922048997
+ABE AA	4.630407124681934
+...
 ```
 
 We take this resultset and process it in PySpark to extract top 10 carriers who have the best on time departure performance.
 
 ```python
+file = sc.textFile('file:///C:/Users/Ashwini/Desktop/onTimeDepartPerf')
+file = file.map(lambda line:line.split()).filter(lambda line:len(line)==3)
+file1 = file.map(lambda tuple:(tuple[0],tuple[1],float(tuple[2])))
+
+rdd = file1.map(lambda row: Row(airport=row[0], carrier=row[1], dep_delay=row[2]))
+df = spark.createDataFrame(rdd)
 ```
 
-We store this data into cassandra table so that we can retrieve the top-10 carriers for a given airport with minimum departure delay. 
+We store this created dataframe into cassandra table so that we can retrieve the top-10 carriers for a given airport with minimum departure delay. 
 
 Cassandra Table Definition:
 
 ```sql
+
 ```
 
 Writing to Cassandra from PySpark:
 
-
 ```python
+
+from cassandra.cluster import Cluster
+from pyspark.sql import SQLContext
+
+cluster = Cluster(['127.0.0.1'])  # provide contact points and port
+session = cluster.connect('aviation')
+sqlContext = SQLContext(spark)
+
+df.write\
+.format("org.apache.spark.sql.cassandra")\
+.mode('append')\
+.options(table = "carrier_depart_delay", keyspace = "aviation")  \
+.save()
 ```
 
 **2. For each airport X, rank the top-10 airports in decreasing order of on-time departure performance from X.**
@@ -167,15 +189,24 @@ Writing to Cassandra from PySpark:
 For this problem, our columns of interest are source airport,destination airport and departure delay of the csv file. Same as group 1, question 2, we perform the MapReduce operation where in the map phase we write the airport+carrier(compound key) to the disk along with the departure delay value whose average is calculated in the reduce phase.
 
 
-* ![MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeArrPerf.java)
+* ![MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/onTimeAirDepart.ipynb)
 
 The output of the Mapreduce Operation is as follows:
 ```
+ABE ALB	10.0
+ABE ATL	9.94767144319345
+ABE AVP	3.4390070921985814
+...
 ```
 
 We take this resultset and process it in PySpark to extract top 10 destination airports who have the best on time departure performance with respect to an 'X' as source airport.
 
 ```python
+file = spark.sparkContext.textFile("file:///C:/Users/Ashwini/Desktop/onTimeAirDepart")
+file1 = file.map(lambda line:line.split()).filter(lambda line:len(line)==3)
+rdd = file.map(lambda row: Row(src_airport=row[0],dest_airport=row[1], dep_delay=row[2]))
+df = spark.createDataFrame(rdd)
+
 ```
 
 We store this data into cassandra(key-value store) table so that we can retrieve the top-10 airports for a given airport with minimum departure delay. 
@@ -188,6 +219,11 @@ Cassandra Table Definition:
 Writing to Cassandra from PySpark:
 
 ```python
+df.write\
+.format("org.apache.spark.sql.cassandra")\
+.mode('append')\
+.options(table = "airport_depart_delay", keyspace = "aviation")  \
+.save()
 ```
 
 **3. For each source-destination pair X-Y, rank the top-10 carriers in decreasing order of on-time arrival performance at Y from X.**
@@ -198,6 +234,10 @@ For this problem we have 4 columns of interest : src,dest,carrier and arr_delay.
 
 The output of the Mapreduce Operation is as follows:
 ```
+ABE ALB AA	23.0
+ABE ATL DL	6.266970753957606
+ABE ATL EA	3.4953071672354947
+...
 ```
 
 We take this resultset and process it in PySpark to extract top 10 destination airports who have the best on time departure performance with respect to an 'X' as source airport.
