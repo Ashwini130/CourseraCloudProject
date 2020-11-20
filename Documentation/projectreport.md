@@ -7,8 +7,8 @@ Follow along the following steps for a walkthrough of Project dev and outputs.
 
 | Title  | Description
 |---|---|
-| **1. Data Extraction and Cleaning** | [Mounting EBS snapshot, extracting and storing cleaned data in HDFS](#1.-Data-Extraction-and-Cleaning )|
-| **2. Data Analysis using Hadoop and PySpark** | [Batch Processing using Hadoop and extracting results using PySpark API and storing information in Cassandra](#2.-Data-Analysis-using-Hadoop-and-PySpark)|
+| **1. Data Extraction and Cleaning** | [Mounting EBS snapshot, extracting and storing cleaned data in HDFS](#1.-data-extraction-and-cleaning)|
+| **2. Data Analysis using Hadoop and PySpark** | [Batch Processing using Hadoop and extracting results using PySpark API and storing information in Cassandra](#2.-data-analysis-using-hadoop-and-pyspark)|
 | **3. Solutions** | [Solutions from the dataset for the questions like best flight on a given day, top 10 airports etc.](#3.-Solutions)|
 |**4.Learnings and Optimizations**| [Learnings from the project and Optimizations performed](#4.-Learnings-and-Optimizations)|
 
