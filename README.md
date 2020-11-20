@@ -40,8 +40,6 @@ done
 ```
 We use the above code to extract the data to our HDFS target directory. Click here for the complete script.
 
-_For more examples and usage, please refer to the [Wiki][wiki]._
-
 Once data is moved to HDFS, I clean the data using spark. The two main steps performed in the DATA CLEANING are as follows: <br>
 1) The Data consists of inconsistent number of columns, so we restrict the number of columns by selecting the minimum number of columns in a file.<br>
 2) There are some rows which have null values in ARRIVAL DELAY column (for cancelled flights), I drop these rows as they do not contribute to our current analysis requirement and might throw errors during data processing.
@@ -56,7 +54,7 @@ Use POM.xml to specify all the dependencies for your java classes. You can refer
 
 ## Contributing
 
-1. Fork it (<https://github.com/yourname/yourproject/fork>)
+1. Fork it 
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
