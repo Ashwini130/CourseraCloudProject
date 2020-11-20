@@ -355,6 +355,86 @@ We have a four value key(src.dest.am/pm,dep_date). The output values received wi
 
 ## 3. Solutions
 
+* Group 1
+
+#Question 1
+
+```
+[(12017757, 'ORD'),
+ (11298234, 'ATL'),
+ (10558647, 'DFW'),
+ (7571890, 'LAX'),
+ (6491476, 'PHX'),
+ (6166458, 'DEN'),
+ (5490416, 'DTW'),
+ (5397899, 'IAH'),
+ (5072056, 'MSP'),
+ (5048777, 'SFO')]
+```
+#Question 2
+
+```
+[(-1.01180434574519, 'HA'),
+ (1.1569234424812056, 'AQ'),
+ (1.4506385127822803, 'PS'),
+ (4.747609195734892, 'ML'),
+ (5.350322661593606, 'PA'),
+ (5.465881148819851, 'F9'),
+ (5.560160627207381, 'NW'),
+ (5.5644240545118775, 'WN'),
+ (5.736312463662878, 'OO'),
+ (5.8671846616957595, '9E')]
+```
+#Question 3
+
+* Group 2
+
+#Question 1
+
+![2.1](images/2.1.PNG)
+
+#Question 2
+
+![2.2](images/2.2.PNG)
+
+#Question 3
+
+![2.3](images/2.2.PNG)
+
+* Group 3
+
+#Question 2
+
+```
+CMI → ORD → LAX, 04/03/2008(dd/mm/yyyy)
+
+CMI - ORD : MQ 4278 at 7:10, delay: -14.00
+ORD - LAX : AA 607 at 19:50, delay: -244.00
+ 
+JAX → DFW → CRP, 09/09/2008
+ 
+JAX - DFW : AA 845 at 7:25, delay: 1.00
+DFW - CRP : MQ 3627 at 16:45, delay: -7.00
+ 
+SLC → BFL → LAX, 01/04/2008
+ 
+SLC - BFL : OO 3755 at 11:00, delay: 12.00
+BFL - LAX : OO 5429 at 14:55, delay: 6.00
+LAX → SFO → PHX, 12/07/2008
+ 
+LAX - SFO : WN 3534 at 06:50, delay: -13.00
+SFO - PHX : US 412 at 19:25, delay: -19.00
+ 
+DFW → ORD → DFW, 10/06/2008
+ 
+DFW - ORD : UA 1104 at 07:00, delay: -21.00
+ORD - DFW : AA 2341 at 16:45, delay: -10.00
+LAX → ORD → JFK, 01/01/2008
+ 
+LAX - ORD : UA 944 at 07:05, delay: 1.00
+ORD - JFK : B6 918 at 19:00, delay: -7.00
+
+```
 ## 4. Learnings and Optimizations
 
 * Added combiner class in hadoop job code - sped up hadoop jobs by 45-50% in terms of time required
