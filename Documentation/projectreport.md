@@ -87,7 +87,7 @@ Following diagram specifies the architecture used to integrate various big data 
 
  ```
  
-![link][images/link.png][Reduce code for Group 1 Question 1](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/popularAirports.java)
+![link](images/link.png)[Reduce code for Group 1 Question 1](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/popularAirports.java)
 Post execution of the MapReduce operation we receive the following results in alphabetical order
  
  ```
