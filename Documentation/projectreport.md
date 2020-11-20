@@ -86,6 +86,7 @@ Following diagram specifies the architecture used to integrate various big data 
 
  ```
  
+ ![MapReduce code for Group 1 Question 1](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/popularAirports.java)
 Post execution of the MapReduce operation we receive the following results in alphabetical order
  
  ```
@@ -102,6 +103,31 @@ rdd.map(lambda line: line.split()).filter(lambda tuple: len(tuple) == 2).filter(
 ```
 
  **2.Rank the top 10 airlines by on-time arrival performance.**
+ 
+ For this question, our column of interests are carrier_id and arrDelay(arrival delay) for the airline. In the map phase, we write the carrier id and it's arrival delay to disk and in the reduce phase we calculate the average of the arrival delay for each key and write the output in the following format:
+ 
+ airport_name(key) avg_arrDelay(value)
+ 
+![MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeArrPerf.java)
+
+The output of the Mapreduce Operation is as follows:
+```
+9E	5.8671846616957595
+AA	7.108231958270729
+AQ	1.1569234424812056
+...
+```
+
+We take this resultset and process it in PySpark to extract top 10 airlines who have the best on time arrival performance.
+
+ ```
+rdd = file.cache()
+rdd = rdd.map(lambda line: line.split()).cache()
+rdd2 = rdd.map(lambda tuple: (tuple[-1],tuple[0])).cache()
+rdd3 = rdd2.map(lambda tuple:(float(tuple[0]),tuple[1]))
+rdd3.takeOrdered(10)
+ ```
+![PySpark code](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/onTimeArrPerf_pyspark.ipynb)
  
  * Group 2
  
