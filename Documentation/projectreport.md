@@ -7,10 +7,10 @@ Follow along the following steps for a walkthrough of Project dev and outputs.
 
 | Title  | Description
 |---|---|
-| **1. Data Extraction and Cleaning** | Mounting EBS snapshot, extracting and storing cleaned data in HDFS|
-| **2. Data Analysis using Hadoop and PySpark** | Batch Processing using Hadoop and extracting results using PySpark API and storing information in Cassandra|
-| **3. Solutions** | Solutions from the dataset for the questions like best flight on a given day, top 10 airports etc.|
-|**4.Learnings and Optimizations**| Learnings from the project and Optimizations performed|
+| **1. Data Extraction and Cleaning** | [Mounting EBS snapshot, extracting and storing cleaned data in HDFS](#1. Data Extraction and Cleaning )|
+| **2. Data Analysis using Hadoop and PySpark** | [Batch Processing using Hadoop and extracting results using PySpark API and storing information in Cassandra](#2. Data Analysis using Hadoop and PySpark)|
+| **3. Solutions** | [Solutions from the dataset for the questions like best flight on a given day, top 10 airports etc.](#3.Solutions)|
+|**4.Learnings and Optimizations**| [Learnings from the project and Optimizations performed](#4.Learnings and Optimizations)|
 
 
 ## 1. Data Extraction and Cleaning
@@ -327,28 +327,37 @@ The following is the Graph generated from the code.
 
 ![Distribution](images/distribution.png)
 
-
+```
 Power law alpha: 1.494627
 Power law D: 0.101342
 Power law xmin: 60654
 Log normal mu: 11.941681
 Log normal sigma: 2.048870
 -3.5442411161248812 0.0003937449777681864
+```
 
 <i>From the plot, it is clear that the distribution does not follow a Zipf distribution but rather follows a lognormal distribution.</i>
 
 
 
-**2) Tom wants to travel from airport X to airport Z. However, Tom also wants to stop at airport Y for some sightseeing on the way. More concretely, Tom has the following requirements
-a) The second leg of the journey (flight Y-Z) must depart two days after the first leg (flight X-Y). For example, if X-Y departs on January 5, 2008, Y-Z must depart on January 7, 2008.
-b) Tom wants his flights scheduled to depart airport X before 12:00 PM local time and to depart airport Y after 12:00 PM local time.
-c) Tom wants to arrive at each destination with as little delay as possible. You can assume you know the actual delay of each flight.
-Your mission (should you choose to accept it!) is to find, for each X-Y-Z and day/month (dd/mm) combination in the year 2008, the two flights (X-Y and Y-Z) that satisfy constraints (a) and (b) and have the best individual performance with respect to constraint (c), if such flights exist.**
+**2) Tom wants to travel from airport X to airport Z. However, Tom also wants to stop at airport Y for some sightseeing on the way. More concretely, Tom has the following requirements<br>
+a) The second leg of the journey (flight Y-Z) must depart two days after the first leg (flight X-Y). For example, if X-Y departs on January 5, 2008, Y-Z must depart on January 7, 2008.<br>
+b) Tom wants his flights scheduled to depart airport X before 12:00 PM local time and to depart airport Y after 12:00 PM local time.<br>
+c) Tom wants to arrive at each destination with as little delay as possible. You can assume you know the actual delay of each flight.<br>
+Your mission (should you choose to accept it!) is to find, for each X-Y-Z and day/month (dd/mm) combination in the year 2008, the two flights (X-Y and Y-Z) that satisfy constraints (a) and (b) and have the best individual performance with respect to constraint (c), if such flights exist.**<br>
 
 
-- This Problem focuses on dataset available for the year 2008. 
+This Problem focuses on dataset available for the year 2008. Hence, I wrote the code to analyse the data for the year 2008 and output the minimum delay for each day (AM and PM) for a flight. Using this output data we predict the fastest flight that will take the flyer to the destination with minimum delay.
+ 
+We have a four value key(src.dest.am/pm,dep_date). The output values received with respect to this key is (carrier,flightnum,arrdelay,departuretime).
+
 
 
 ## 3. Solutions
 
 ## 4. Learnings and Optimizations
+
+* Added combiner class in hadoop job code - sped up hadoop jobs by 45-50% in terms of time required
+* Spark application code/job when submitted to the respective nodes will throw an error if an action function(collect or count) is not called before writing the data frame to a file(which is not true in the case of scala script)
+* Initially, I was using 1GB RAM EC2 instances, but the Spark ETL operations could not complete in this memory configuration and the system had to be rebooted. So had to upgrade to 8 GB RAM for good performance and speed.(worked well in 4Gb ram as well for current use case)
+
