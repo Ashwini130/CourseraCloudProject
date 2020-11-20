@@ -87,7 +87,7 @@ Following diagram specifies the architecture used to integrate various big data 
 
  ```
  
- ![MapReduce code for Group 1 Question 1](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/popularAirports.java)
+[MapReduce code for Group 1 Question 1](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/popularAirports.java)
 Post execution of the MapReduce operation we receive the following results in alphabetical order
  
  ```
@@ -109,7 +109,7 @@ rdd.map(lambda line: line.split()).filter(lambda tuple: len(tuple) == 2).filter(
  
  airport_name(key) avg_arrDelay(value)
  
-* ![MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeArrPerf.java)
+[MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/CloudCapstone/src/main/java/Task1/onTimeArrPerf.java)
 
 The output of the Mapreduce Operation is as follows:
 ```
@@ -128,7 +128,7 @@ rdd2 = rdd.map(lambda tuple: (tuple[-1],tuple[0])).cache()
 rdd3 = rdd2.map(lambda tuple:(float(tuple[0]),tuple[1]))
 rdd3.takeOrdered(10)
  ```
-* ![PySpark code](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/onTimeArrPerf_pyspark.ipynb)
+[PySpark code](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/onTimeArrPerf_pyspark.ipynb)
  
  * Group 2
  
@@ -189,7 +189,7 @@ df.write\
 For this problem, our columns of interest are source airport,destination airport and departure delay of the csv file. Same as group 1, question 2, we perform the MapReduce operation where in the map phase we write the airport+carrier(compound key) to the disk along with the departure delay value whose average is calculated in the reduce phase.
 
 
-* ![MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/onTimeAirDepart.ipynb)
+[MapReduce code for Group 1 Question 2](https://github.com/Ashwini130/CourseraCloudProject/blob/master/JupyterNotebooks/onTimeAirDepart.ipynb)
 
 The output of the Mapreduce Operation is as follows:
 ```
@@ -230,7 +230,7 @@ df.write\
 
 For this problem we have 4 columns of interest : src,dest,carrier and arr_delay. Here the key will again be a compoun key(src, dest, carrier) and the average arr_delay will be our value.\
 
-* ![MapReduce Code]()
+[MapReduce Code]()
 
 The output of the Mapreduce Operation is as follows:
 ```
@@ -263,7 +263,7 @@ Writing to Cassandra from PySpark:
 
 We use the python matplotlib library for this question to plot the distibution of the aiports and it's occurence in the data. 
 
-* ![Python code for Plotting Distribution]
+[Python code for Plotting Distribution]
 
 The following is the Graph generated from the code.
 
