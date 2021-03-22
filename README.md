@@ -1,4 +1,4 @@
-# CourseraCloudProject
+# CourseraBigDataProject
 Capstone Project by Coursera for Cloud Computing Specialisation.
 
 > This repository consists of the code, scripts and output of the analysis of US Transportation Dataset (1988-2008) for aviation and predicting the best flights on a given day such that there is minimum travel delay.<br>
