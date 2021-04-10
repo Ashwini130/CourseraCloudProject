@@ -13,7 +13,7 @@ Follow along the following steps for a walkthrough of Project dev and outputs.
 |**4.Learnings and Optimizations**| [Learnings from the project and Optimizations performed](#4-Learnings-and-Optimizations)|
 
 
-##1. Data Extraction and Cleaning
+## 1. Data Extraction and Cleaning
 
 
 **✅ Step 1a. Create an AWS or AWS Educate Account** :<br>
